@@ -10,7 +10,7 @@ function Layout() {
         <meta name="author" content={author} />
         <title>{title}</title> */}
       </div>
-      <Typography></Typography>
+      <Typography>Layout</Typography>
     </Container>
   );
 }
