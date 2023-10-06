@@ -1,19 +1,17 @@
 import "./App.css";
 
-import Pages from "./pages";
 import Footer from "./components/Footer";
 import { Box } from "@mui/material";
-import Layout from "./layout/Layout";
-import Login from "./components/Login";
+import Navbar from "./components/Navbar";
 import Signup from "./components/Signup";
+import Card from "./components/Card";
 
 function App() {
   return (
     <Box>
-      <Layout />
-      <Login />
+      <Navbar />
+      <Card />
       <Signup />
-      <Pages />
       <Footer />
     </Box>
   );

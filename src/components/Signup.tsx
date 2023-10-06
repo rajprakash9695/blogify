@@ -11,6 +11,7 @@ function Signup() {
         gap={2}
         display={"flex"}
         flexDirection={"column"}
+        my={10}
       >
         <Typography variant="h4" mb={3}>
           Signup User{" "}
