@@ -17,10 +17,18 @@ function Login() {
         </Typography>
         <TextField
           variant="outlined"
+          type="email"
           fullWidth
-          label="Please Enter Email Address"
+          label="Please Enter Your Email Address"
+          value={"email"}
         />
-        <TextField variant="outlined" fullWidth label="Please Enter Password" />
+        <TextField
+          variant="outlined"
+          type="password"
+          fullWidth
+          value={"password"}
+          label="Please Enter Your Password"
+        />
         <Button type="submit" variant="contained">
           Login
         </Button>

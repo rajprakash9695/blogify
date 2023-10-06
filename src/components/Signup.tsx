@@ -15,14 +15,30 @@ function Signup() {
         <Typography variant="h4" mb={3}>
           Signup User{" "}
         </Typography>
-        <TextField variant="outlined" fullWidth label="Please Enter Name" />
         <TextField
           variant="outlined"
           fullWidth
-          label="Please Enter Email Address"
+          label="Please Your Enter Name"
+          type="text"
         />
-        <TextField variant="outlined" fullWidth label="Please Enter Password" />
-        <TextField variant="outlined" fullWidth label="Confirm  Password" />
+        <TextField
+          variant="outlined"
+          fullWidth
+          label="Please Enter Your Email Address"
+          type="email"
+        />
+        <TextField
+          variant="outlined"
+          fullWidth
+          label="Please Enter Your Password"
+          type="password"
+        />
+        <TextField
+          variant="outlined"
+          fullWidth
+          label="Confirm  Password"
+          type="password"
+        />
         <Button type="submit" variant="contained">
           Signup
         </Button>
