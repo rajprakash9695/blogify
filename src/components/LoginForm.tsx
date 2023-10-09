@@ -1,10 +1,30 @@
 import React, { useState } from "react";
-import { Button, Container, TextField, Typography } from "@mui/material";
+import { Box, Button, Container, TextField, Typography } from "@mui/material";
 
 interface LoginFormProps {
   onLogin: (email: string, password: string) => void;
   onSignup: (email: string, password: string) => void;
 }
+
+// const [open, setOpen] = useState(false);
+
+// const handleOpen = () => {
+//   setOpen(true);
+// };
+
+// const handleClose = () => {
+//   setOpen(false);
+// };
+
+// const handleLogin = (email: string, password: string) => {
+//   // Implement your login logic here
+//   console.log("Login:", email, password);
+// };
+
+// const handleSignup = (email: string, password: string) => {
+//   // Implement your signup logic here
+//   console.log("Signup:", email, password);
+// };
 
 const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onSignup }) => {
   const [name, setName] = useState("");
@@ -22,7 +42,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onSignup }) => {
   };
 
   return (
-    <div>
+    <Box my={5}>
       <Container maxWidth={"sm"}>
         <Typography textAlign={"center"} variant="h5">
           {isLogin ? "Login" : "Signup"}
@@ -98,7 +118,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onSignup }) => {
           </span>
         </Typography>
       </Container>
-    </div>
+    </Box>
   );
 };
 

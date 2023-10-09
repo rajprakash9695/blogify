@@ -1,21 +1,16 @@
 import "./App.css";
 import { Box } from "@mui/material";
 import Navbar from "./components/Navbar";
+
+import HomeBlog from "./components/HomeBlog";
+import { Route, Routes } from "react-router-dom";
+
 import LoginForm from "./components/LoginForm";
-import CustomModal from "./components/CustomModel";
-import { useState } from "react";
+import MdEditor from "./components/CreateBolg";
+import Footer from "./components/Footer";
+import Blogpost from "./components/Blogpost";
 
 function App() {
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const handleLogin = (email: string, password: string) => {
     // Implement your login logic here
     console.log("Login:", email, password);
@@ -28,17 +23,16 @@ function App() {
   return (
     <Box>
       <Navbar />
-      <button onClick={handleOpen}>Open Modal</button>
-
-      <CustomModal
-        open={open}
-        onClose={handleClose}
-        title="Custom Modal"
-        maxWidth={"sm"}
-      >
-        This is the content of the custom modal.
-      </CustomModal>
-      <LoginForm onLogin={handleLogin} onSignup={handleSignup} />
+      <Routes>
+        <Route path="/" element={<HomeBlog />} />
+        <Route
+          path="/login"
+          element={<LoginForm onLogin={handleLogin} onSignup={handleSignup} />}
+        />
+        <Route path="/post" element={<MdEditor />} />
+        <Route path="/view" element={<Blogpost />} />
+      </Routes>
+      <Footer />
     </Box>
   );
 }

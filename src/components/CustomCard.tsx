@@ -1,68 +1,41 @@
-import React from "react";
 import {
-  Card,
-  CardContent,
-  CardMedia,
-  Typography,
+  Box,
   Button,
-  makeStyles,
+  Card,
+  CardActions,
+  CardContent,
+  Container,
+  Typography,
 } from "@mui/material";
 
-const useStyles = makeStyles((theme) => ({
-  card: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    maxWidth: 400,
-    margin: "16px",
-  },
-  media: {
-    height: 200,
-    width: "100%",
-    objectFit: "cover",
-  },
-  button: {
-    marginTop: "auto",
-  },
-}));
-
-interface CustomCardProps {
-  image: string;
+type Props = {
   title: string;
   description: string;
-  onReadMoreClick: () => void;
-}
-
-const CustomCard: React.FC<CustomCardProps> = ({
-  image,
-  title,
-  description,
-  onReadMoreClick,
-}) => {
-  const classes = useStyles();
-
-  return (
-    <Card className={classes.card}>
-      <CardMedia
-        component="img"
-        alt={title}
-        image={image}
-        className={classes.media}
-      />
-      <CardContent>
-        <Typography variant="h6">{title}</Typography>
-        <Typography variant="body2">{description}</Typography>
-      </CardContent>
-      <Button
-        variant="contained"
-        color="primary"
-        className={classes.button}
-        onClick={onReadMoreClick}
-      >
-        Read More
-      </Button>
-    </Card>
-  );
+  image: string;
 };
+
+function CustomCard({ title = " ", description = "", image = "" }: Props) {
+  return (
+    <Box>
+      <Container>
+        <Card>
+          <img alt="green iguana" src={image} width={300} height={200} />
+          <CardContent>
+            <Typography gutterBottom variant="h5" component="div">
+              {title}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {description}
+            </Typography>
+          </CardContent>
+          <CardActions>
+            <Button size="small">Share</Button>
+            <Button size="small">Read More</Button>
+          </CardActions>
+        </Card>
+      </Container>
+    </Box>
+  );
+}
 
 export default CustomCard;

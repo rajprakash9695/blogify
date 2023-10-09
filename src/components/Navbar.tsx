@@ -7,6 +7,7 @@ import {
   InputAdornment,
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -14,7 +15,9 @@ function Navbar() {
       <Container>
         <Box display={"flex"} justifyContent={"space-between"}>
           <Typography variant="h4" color={"white"}>
-            Blogify
+            <Link style={{ textDecoration: "none", color: "white" }} to="/">
+              Blogify
+            </Link>
           </Typography>
           <Box display={"flex"} alignItems={"center"} gap={1}>
             <TextField
@@ -37,11 +40,21 @@ function Navbar() {
             <Typography variant="h6" color={"white"} px={3}>
               User
             </Typography>
+            <Typography variant="h6" color={"white"} px={3}>
+              <Link
+                to="/post"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Create Blog
+              </Link>
+            </Typography>
             <Button variant="contained" color="warning">
-              Login
-            </Button>
-            <Button variant="contained" color="success">
-              Signup
+              <Link
+                style={{ textDecoration: "none", color: "white" }}
+                to="/login"
+              >
+                Login
+              </Link>
             </Button>
           </Box>
         </Box>
