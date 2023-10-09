@@ -6,9 +6,10 @@ import HomeBlog from "./components/HomeBlog";
 import { Route, Routes } from "react-router-dom";
 
 import LoginForm from "./components/LoginForm";
-import MdEditor from "./components/CreateBolg";
+
 import Footer from "./components/Footer";
 import Blogpost from "./components/Blogpost";
+import MdEditor from "./components/MdEditor";
 
 function App() {
   const handleLogin = (email: string, password: string) => {
