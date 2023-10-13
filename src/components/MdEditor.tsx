@@ -1,6 +1,7 @@
 import { Box, Container, Typography } from "@mui/material";
 import MDEditor from "@uiw/react-md-editor";
 import { useState } from "react";
+import CustomCard from "./CustomCard";
 
 function MdEditor() {
   const [value, setValue] = useState("");
@@ -15,7 +16,8 @@ function MdEditor() {
         <Typography variant="h5" my={2} textAlign={"center"}>
           Preview Blog
         </Typography>
-        <MDEditor.Markdown source={value} style={{ whiteSpace: "pre-wrap" }} />
+        {/* <MDEditor.Markdown source={value} style={{ whiteSpace: "pre-wrap" }} /> */}
+        <CustomCard description="hjsj" image="zhjsj" title="Hvahs" />
       </Container>
     </Box>
   );

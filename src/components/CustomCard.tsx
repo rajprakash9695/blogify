@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   Box,
   Button,
@@ -7,6 +9,7 @@ import {
   Container,
   Typography,
 } from "@mui/material";
+import blogImage from "../assets/blog-icon.png";
 
 type Props = {
   title: string;
@@ -15,11 +18,17 @@ type Props = {
 };
 
 function CustomCard({ title = " ", description = "", image = "" }: Props) {
+  const [isImage, setImage] = useState("");
+  console.log("log", isImage);
   return (
     <Box>
       <Container>
-        <Card>
-          <img alt="green iguana" src={image} width={300} height={200} />
+        <Card sx={{ maxHeight: "22222" }}>
+          {isImage ? (
+            <img alt="green iguana" src={image} width={300} height={200} />
+          ) : (
+            <img alt="blog image" src={blogImage} width={300} height={200} />
+          )}
           <CardContent>
             <Typography gutterBottom variant="h5" component="div">
               {title}

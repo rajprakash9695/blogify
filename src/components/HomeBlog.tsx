@@ -8,6 +8,7 @@ function HomeBlog() {
       display={"flex"}
       flexWrap={"wrap"}
       alignItems={"center"}
+      justifyContent={"center"}
       gap={2}
     >
       <CustomCard
