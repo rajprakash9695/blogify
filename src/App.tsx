@@ -10,6 +10,7 @@ import LoginForm from "./components/LoginForm";
 import Footer from "./components/Footer";
 import Blogpost from "./components/Blogpost";
 import MdEditor from "./components/MdEditor";
+import NotFound from "./components/NotFound";
 
 function App() {
   const handleLogin = (email: string, password: string) => {
@@ -32,6 +33,7 @@ function App() {
         />
         <Route path="/post" element={<MdEditor />} />
         <Route path="/view" element={<Blogpost />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </Box>
