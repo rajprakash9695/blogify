@@ -1,7 +1,5 @@
 import { Box, Container, Typography } from "@mui/material";
 import NotFoundImage from "../assets/404_illustration_4x.png";
-import { Link } from "react-router-dom";
-import HomeBlog from "./HomeBlog";
 
 function NotFound() {
   return (

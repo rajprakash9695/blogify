@@ -37,7 +37,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, onSignup }) => {
     console.log("Form Data Submitted:", values);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     onLogin(email, password);
   };
 
