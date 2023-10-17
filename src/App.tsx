@@ -25,6 +25,7 @@ function App() {
   return (
     <Box>
       <Navbar />
+
       <Routes>
         <Route path="/" element={<HomeBlog />} />
         <Route
