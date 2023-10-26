@@ -11,6 +11,8 @@ import Footer from "./components/Footer";
 import Blogpost from "./components/Blogpost";
 import MdEditor from "./components/MdEditor";
 import NotFound from "./components/NotFound";
+import Search from "./components/search";
+import Signup from "./components/Signup";
 
 function App() {
   const handleLogin = (email: string, password: string) => {
@@ -35,6 +37,8 @@ function App() {
         <Route path="/post" element={<MdEditor />} />
         <Route path="/view" element={<Blogpost />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
       <Footer />
     </Box>

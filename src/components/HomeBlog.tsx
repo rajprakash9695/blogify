@@ -41,16 +41,7 @@ function HomeBlog() {
         description="lohjkasdgfsfgbskjbskbdkjb"
         image="https://www.ionos.co.uk/digitalguide/fileadmin/DigitalGuide/Hosting/blog-selbst-hosten-c.jpg "
       />
-      <CustomCard
-        title="Tea"
-        description="lohjkasdgfsfgbskjbskbdkjb"
-        image="https://images.pexels.com/photos/733856/pexels-photo-733856.jpeg?cs=srgb&dl=pexels-tirachard-kumtanom-733856.jpg&fm=jpg "
-      />
-      <CustomCard
-        title="Morning"
-        description="lohjkasdgfsfgbskjbskbdkjb"
-        image="https://images.unsplash.com/photo-1432821596592-e2c18b78144f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YmxvZ3xlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80 "
-      />
+
       <CustomCard
         title="first"
         description="lohjkasdgfsfgbskjbskbdkjb"
