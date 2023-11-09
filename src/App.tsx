@@ -12,23 +12,16 @@ import Blogpost from "./components/Blogpost";
 import MdEditor from "./components/MdEditor";
 import NotFound from "./components/NotFound";
 import Search from "./components/search";
-import Signup from "./components/Signup";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
 
 function App() {
-  const handleLogin = (email: string, password: string) => {
-    // Implement your login logic here
-    console.log("Login:", email, password);
-  };
-
-  const handleSignup = (email: string, password: string) => {
-    // Implement your signup logic here
-    console.log("Signup:", email, password);
-  };
   return (
     <Box>
       <Navbar />
+      <Login />
 
-      <Routes>
+      {/* <Routes>
         <Route path="/" element={<HomeBlog />} />
         <Route
           path="/login"
@@ -39,7 +32,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/search" element={<Search />} />
         <Route path="/signup" element={<Signup />} />
-      </Routes>
+      </Routes> */}
       <Footer />
     </Box>
   );

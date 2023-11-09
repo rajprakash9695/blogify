@@ -1,13 +1,14 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
-function Signup() {
+function Login() {
   const [input, setInput] = useState({
-    name: "",
     email: "",
     password: "",
   });
-  const [data, setData] = useState();
+
+  const [getdata, setGetData] = useState([]);
 
   const handleInput = (e: any) => {
     setInput({
@@ -15,47 +16,76 @@ function Signup() {
       [e.target.name]: e.target.value,
     });
   };
+
+  //   const validateForm = () => {
+  //     const { email, password } = input;
+  //     if (!email || !password) {
+  //       Swal.fire({
+  //         icon: "error",
+  //         title: "All fields are required",
+  //         showConfirmButton: false,
+  //         timer: 1500,
+  //       });
+  //       return false;
+  //     }
+
+  //     // Add more complex validation if needed (e.g., email format)
+  //     return true;
+  //   };
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    // console.log("Submitted Data:", input);
 
-    const response = fetch("http://localhost:8080/user/signup", {
+    // if (!validateForm()) {
+    //   return;
+    // }
+
+    const res = await fetch("http://localhost:3030/api/v1/user/login", {
       method: "POST",
       body: JSON.stringify(input),
       headers: {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
-      .then((response) => setData(response));
+      .then((res) => res.json())
+      .then((data) => setGetData(data));
 
-    // console.log(response);
-    // localStorage.setItem("response");
+    if (getdata.error) {
+      Swal.fire({
+        icon: "error",
+        title: getdata.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      Swal.fire({
+        icon: "success",
+        title: getdata.message,
+        showConfirmButton: true,
+        timer: 1500,
+      });
+    }
+
+    // setInput({
+    //   email: "",
+    //   password: "",
+    // });
   };
-
-  console.log(data);
 
   return (
     <Box sx={{ height: "80vh" }} mt={4}>
       <Container maxWidth={"sm"}>
         <form onSubmit={handleSubmit}>
           <Typography variant="h4" textAlign={"center"}>
-            {" "}
-            Signup Form
+            Login Form
           </Typography>
-          <TextField
-            label="Name"
-            fullWidth
-            margin="normal"
-            name="name"
-            onChange={handleInput}
-          />
           <TextField
             label="Email"
             type="email"
             fullWidth
             margin="normal"
             name="email"
+            value={input.email}
             onChange={handleInput}
           />
           <TextField
@@ -64,19 +94,16 @@ function Signup() {
             fullWidth
             name="password"
             margin="normal"
+            value={input.password}
             onChange={handleInput}
           />
           <Button variant="contained" color="primary" fullWidth type="submit">
-            Signup
+            Login
           </Button>
         </form>
-
-        <Box>
-          <Typography>{data}</Typography>
-        </Box>
       </Container>
     </Box>
   );
 }
 
-export default Signup;
+export default Login;
