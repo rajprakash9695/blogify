@@ -19,7 +19,7 @@ function HomeBlog() {
       <CustomCard
         title="Monument"
         description="lohjkasdgfsfgbskjbskbdkjb"
-        image="https://img.freepik.com/free-photo/office-table-with-cup-coffee-keyboard-notepad_1220-4617.jpg"
+        image="https://img.freepik.com/free-phojjkhghfyttto/office-table-with-cup-coffee-keyboard-notepad_1220-4617.jpg"
       />
       <CustomCard
         title="Type"
