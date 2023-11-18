@@ -1,13 +1,5 @@
-import {
-  Box,
-  Container,
-  Typography,
-  Button,
-  TextField,
-  InputAdornment,
-} from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import { Link } from "react-router-dom";
+import { Box, Container, Typography, Button } from "@mui/material";
+import { Link, NavLink } from "react-router-dom";
 
 function Navbar() {
   return (
@@ -20,27 +12,17 @@ function Navbar() {
             </Link>
           </Typography>
           <Box display={"flex"} alignItems={"center"} gap={1}>
-            <TextField
-              id="search"
-              type="search"
-              size="small"
-              sx={{
-                width: 300,
-                backgroundColor: "white",
-              }}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
+            <NavLink
+              to="/search"
+              style={{ textDecoration: "none", color: "white" }}
+            >
+              <Typography>Search Blog</Typography>
+            </NavLink>
 
-            <Typography variant="h6" color={"white"} px={3}>
+            <Typography variant="h6" color={"white"} px={2}>
               User
             </Typography>
-            <Typography variant="h6" color={"white"} px={3}>
+            <Typography variant="h6" color={"white"} px={2}>
               <Link
                 to="/post"
                 style={{ textDecoration: "none", color: "white" }}
