@@ -1,4 +1,5 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
+import { Axios } from "axios";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
@@ -36,35 +37,62 @@ function Login() {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    // if (!validateForm()) {
+    try {
+      const res = await Axios.post(
+        "http://localhost:3030/api/v1/user/login",
+        input
+      );
+      console.log("res", res);
+
+      if (res && res.data.success) {
+        Swal.fire({
+          icon: "success",
+          title: "Login has been Successful",
+          showConfirmButton: true,
+          confirmButtonText: "OK",
+        });
+        console.log("log", res.data.user);
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Login  failed",
+        text: "An error occurred during login.",
+        showConfirmButton: true,
+        confirmButtonText: "OK",
+      });
+    }
+
+    // if (!validateForm()) {/
     //   return;
     // }
 
-    const res = await fetch("http://localhost:3030/api/v1/user/login", {
-      method: "POST",
-      body: JSON.stringify(input),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setGetData(data));
+    // const res = await fetch("http://localhost:3030/api/v1/user/login", {
+    //   method: "POST",
+    //   body: JSON.stringify(input),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => setGetData(data));
 
-    if (getdata.error) {
-      Swal.fire({
-        icon: "error",
-        title: getdata.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    } else {
-      Swal.fire({
-        icon: "success",
-        title: getdata.message,
-        showConfirmButton: true,
-        timer: 1500,
-      });
-    }
+    // if (getdata.error) {
+    //   Swal.fire({
+    //     icon: "error",
+    //     title: getdata.message,
+    //     showConfirmButton: false,
+    //     timer: 1500,
+    //   });
+    // } else {
+    //   Swal.fire({
+    //     icon: "success",
+    //     title: getdata.message,
+    //     showConfirmButton: true,
+    //     timer: 1500,
+    //   });
+    // }
 
     // setInput({
     //   email: "",
