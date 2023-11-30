@@ -1,9 +1,12 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { Axios } from "axios";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 function Login() {
+  const navigate = useNavigate();
+
   const [input, setInput] = useState({
     email: "",
     password: "",
@@ -18,86 +21,61 @@ function Login() {
     });
   };
 
-  //   const validateForm = () => {
-  //     const { email, password } = input;
-  //     if (!email || !password) {
-  //       Swal.fire({
-  //         icon: "error",
-  //         title: "All fields are required",
-  //         showConfirmButton: false,
-  //         timer: 1500,
-  //       });
-  //       return false;
-  //     }
+  const validateForm = () => {
+    const { email, password } = input;
+    if (!email || !password) {
+      Swal.fire({
+        icon: "error",
+        title: "All fields are required",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      return false;
+    }
 
-  //     // Add more complex validation if needed (e.g., email format)
-  //     return true;
-  //   };
+    // Add more complex validation if needed (e.g., email format)
+    return true;
+  };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    try {
-      const res = await Axios.post(
-        "http://localhost:3030/api/v1/user/login",
-        input
-      );
-      console.log("res", res);
-
-      if (res && res.data.success) {
-        Swal.fire({
-          icon: "success",
-          title: "Login has been Successful",
-          showConfirmButton: true,
-          confirmButtonText: "OK",
-        });
-        console.log("log", res.data.user);
-      }
-    } catch (error) {
-      console.log(error);
-      Swal.fire({
-        icon: "error",
-        title: "Login  failed",
-        text: "An error occurred during login.",
-        showConfirmButton: true,
-        confirmButtonText: "OK",
-      });
+    if (!validateForm()) {
+      return;
     }
 
-    // if (!validateForm()) {/
-    //   return;
-    // }
+    const res = await fetch("http://localhost:3030/api/v1/user/login", {
+      method: "POST",
+      body: JSON.stringify(input),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => setGetData(data));
 
-    // const res = await fetch("http://localhost:3030/api/v1/user/login", {
-    //   method: "POST",
-    //   body: JSON.stringify(input),
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => setGetData(data));
+    if (getdata.error) {
+      Swal.fire({
+        icon: "error",
+        title: getdata.message,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate = false;
+    } else {
+      Swal.fire({
+        icon: "success",
+        title: "User Login Successsfully",
+        showConfirmButton: true,
+        timer: 1500,
+      });
+      navigate("/post");
+    }
 
-    // if (getdata.error) {
-    //   Swal.fire({
-    //     icon: "error",
-    //     title: getdata.message,
-    //     showConfirmButton: false,
-    //     timer: 1500,
-    //   });
-    // } else {
-    //   Swal.fire({
-    //     icon: "success",
-    //     title: getdata.message,
-    //     showConfirmButton: true,
-    //     timer: 1500,
-    //   });
-    // }
-
-    // setInput({
-    //   email: "",
-    //   password: "",
-    // });
+    setInput({
+      email: "",
+      password: "",
+    });
   };
 
   return (
@@ -129,6 +107,9 @@ function Login() {
             Login
           </Button>
         </form>
+        <Typography mt={2} textAlign={"center"}>
+          If User doesn't exist please <Link to="/signup">Register</Link>
+        </Typography>
       </Container>
     </Box>
   );

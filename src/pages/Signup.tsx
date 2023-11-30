@@ -1,5 +1,6 @@
 import { Box, Button, Container, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 function Signup() {
@@ -111,10 +112,9 @@ function Signup() {
             Signup
           </Button>
         </form>
-
-        <Box>
-          <Typography>fgfd</Typography>
-        </Box>
+        <Typography mt={2} textAlign={"center"}>
+          If user already Exist Please <Link to="/login">Login</Link>
+        </Typography>
       </Container>
     </Box>
   );

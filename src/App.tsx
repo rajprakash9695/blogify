@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import HomeBlog from "./components/HomeBlog";
 import { Route, Routes } from "react-router-dom";
 
-import LoginForm from "./components/LoginForm";
+// import LoginForm from "./components/LoginForm";
 
 import Footer from "./components/Footer";
 import Blogpost from "./components/Blogpost";
@@ -19,20 +19,21 @@ function App() {
   return (
     <Box>
       <Navbar />
-      <Login />
+      {/* <Signup /> */}
 
-      {/* <Routes>
+      <Routes>
         <Route path="/" element={<HomeBlog />} />
-        <Route
+        {/* <Route
           path="/login"
           element={<LoginForm onLogin={handleLogin} onSignup={handleSignup} />}
-        />
+        /> */}
         <Route path="/post" element={<MdEditor />} />
         <Route path="/view" element={<Blogpost />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/search" element={<Search />} />
         <Route path="/signup" element={<Signup />} />
-      </Routes> */}
+        <Route path="/login" element={<Login />} />
+      </Routes>
       <Footer />
     </Box>
   );
