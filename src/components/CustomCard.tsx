@@ -1,43 +1,54 @@
-// import { useState } from "react";
-
 import {
   Box,
   Button,
   Card,
   CardActions,
   CardContent,
-  Container,
+  CardMedia,
   Typography,
-} from "@mui/material";
-// import blogImage from "../assets/blog-icon.png";
+} from '@mui/material';
+import { Link } from 'react-router-dom';
 
 type Props = {
   title: string;
   description: string;
   image: string;
+  to: string;
 };
 
-function CustomCard({ title = " ", description = "", image = "" }: Props) {
+function CustomCard({
+  title = ' ',
+  description = '',
+  image = '',
+  to = '',
+}: Props) {
+  const truncatedDescription =
+    description.length > 300 ? description.slice(0, 200) + '...' : description;
+
   return (
     <Box>
-      <Container>
-        <Card>
-          <img alt="green iguana" src={image} width={300} height={200} />
-
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-              {title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {description}
-            </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small">Share</Button>
-            <Button size="small">Read More</Button>
-          </CardActions>
-        </Card>
-      </Container>
+      <Card sx={{ maxWidth: 545, minHeight: 480 }}>
+        <CardMedia
+          component='img'
+          height='230'
+          image={image}
+          alt='Paella dish'
+        />
+        <CardContent>
+          <Typography gutterBottom variant='h6' component='div'>
+            {title}
+          </Typography>
+          <Typography variant='body1' color='text.secondary'>
+            {truncatedDescription}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size='small'>Share</Button>
+          <Link to={to}>
+            <Button size='small'>Read More</Button>
+          </Link>
+        </CardActions>
+      </Card>
     </Box>
   );
 }

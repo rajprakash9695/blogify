@@ -1,39 +1,46 @@
-import { Box, Container, Typography, Button } from "@mui/material";
-import { Link, NavLink } from "react-router-dom";
+import { Box, Container, Typography, Button } from '@mui/material';
+import { Link, NavLink } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <Box sx={{ bgcolor: "primary.main" }} p={3} position={"sticky"}>
+    <Box
+      sx={{ bgcolor: 'primary.main' }}
+      p={2}
+      position={'fixed'}
+      top={0}
+      width={'100%'}
+      boxShadow={'1'}
+    >
       <Container>
-        <Box display={"flex"} justifyContent={"space-between"}>
-          <Typography variant="h4" color={"white"}>
-            <Link style={{ textDecoration: "none", color: "white" }} to="/">
+        <Box display={'flex'} justifyContent={'space-between'}>
+          <Typography variant='h4' color={'white'}>
+            <Link style={{ textDecoration: 'none', color: 'white' }} to='/'>
               Blogify
             </Link>
           </Typography>
-          <Box display={"flex"} alignItems={"center"} gap={1}>
+          <Box display={'flex'} alignItems={'center'} gap={1}>
             <NavLink
-              to="/search"
-              style={{ textDecoration: "none", color: "white" }}
+              to='/search'
+              style={{ textDecoration: 'none', color: 'white' }}
             >
               <Typography>Search Blog</Typography>
             </NavLink>
 
-            <Typography variant="h6" color={"white"} px={2}>
+            <Typography variant='h6' color={'white'} px={2}>
               User
             </Typography>
-            <Typography variant="h6" color={"white"} px={2}>
+            <Typography variant='h6' color={'white'} px={2}>
               <Link
-                to="/post"
-                style={{ textDecoration: "none", color: "white" }}
+                to='/post'
+                style={{ textDecoration: 'none', color: 'white' }}
               >
                 Create Blog
               </Link>
             </Typography>
-            <Button variant="contained" color="warning">
+            <Button variant='contained' color='warning'>
               <Link
-                style={{ textDecoration: "none", color: "white" }}
-                to="/login"
+                style={{ textDecoration: 'none', color: 'white' }}
+                to='/login'
               >
                 Login
               </Link>

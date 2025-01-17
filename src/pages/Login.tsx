@@ -1,18 +1,30 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
-import { Axios } from "axios";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import axiosInstance from '../utils/axiosIntance';
+import { IUsers } from '../@types';
+
+const initialValue: IUsers = {
+  user: {
+    _id: '',
+    email: '',
+    name: '',
+  },
+  accessToken: '',
+  refreshToken: '',
+};
 
 function Login() {
   const navigate = useNavigate();
 
   const [input, setInput] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
 
-  const [getdata, setGetData] = useState([]);
+  // const [getdata, setGetData] = useState();
+  // const [getdata, setGetData] = useState<IUsers>(initialValue);
 
   const handleInput = (e: any) => {
     setInput({
@@ -25,8 +37,8 @@ function Login() {
     const { email, password } = input;
     if (!email || !password) {
       Swal.fire({
-        icon: "error",
-        title: "All fields are required",
+        icon: 'error',
+        title: 'All fields are required',
         showConfirmButton: false,
         timer: 1500,
       });
@@ -37,78 +49,57 @@ function Login() {
     return true;
   };
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
+  const handleSubmit = async (event: any) => {
+    event.preventDefault();
+    try {
+      const res = await axiosInstance.post('/auth/login', input);
 
-    if (!validateForm()) {
-      return;
+      if (res.status === 200) {
+        localStorage.setItem('accessToken', res.data.data.accessToken);
+        Swal.fire({
+          icon: 'success',
+          title: 'Login Success',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate('/');
+      }
+    } catch (error) {
+      console.log('err', error);
     }
-
-    const res = await fetch("http://localhost:3030/api/v1/user/login", {
-      method: "POST",
-      body: JSON.stringify(input),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => setGetData(data));
-
-    if (getdata.error) {
-      Swal.fire({
-        icon: "error",
-        title: getdata.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      navigate = false;
-    } else {
-      Swal.fire({
-        icon: "success",
-        title: "User Login Successsfully",
-        showConfirmButton: true,
-        timer: 1500,
-      });
-      navigate("/post");
-    }
-
-    setInput({
-      email: "",
-      password: "",
-    });
   };
 
   return (
-    <Box sx={{ height: "80vh" }} mt={4}>
-      <Container maxWidth={"sm"}>
+    <Box sx={{ height: '80vh' }} mt={4}>
+      <Container maxWidth={'sm'}>
         <form onSubmit={handleSubmit}>
-          <Typography variant="h4" textAlign={"center"}>
+          <Typography variant='h4' textAlign={'center'}>
             Login Form
           </Typography>
           <TextField
-            label="Email"
-            type="email"
+            label='Email'
+            type='email'
             fullWidth
-            margin="normal"
-            name="email"
+            margin='normal'
+            name='email'
             value={input.email}
             onChange={handleInput}
           />
           <TextField
-            label="Password"
-            type="password"
+            label='Password'
+            type='password'
             fullWidth
-            name="password"
-            margin="normal"
+            name='password'
+            margin='normal'
             value={input.password}
             onChange={handleInput}
           />
-          <Button variant="contained" color="primary" fullWidth type="submit">
+          <Button variant='contained' color='primary' fullWidth type='submit'>
             Login
           </Button>
         </form>
-        <Typography mt={2} textAlign={"center"}>
-          If User doesn't exist please <Link to="/signup">Register</Link>
+        <Typography mt={2} textAlign={'center'}>
+          If User doesn't exist please <Link to='/signup'>Register</Link>
         </Typography>
       </Container>
     </Box>
