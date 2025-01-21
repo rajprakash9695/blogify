@@ -25,7 +25,6 @@ function Blogpost() {
 
   const id = pathname.split('/').pop();
 
-  // const id = '6788f00a6abe3d1e57a9e66b';
   const [getData, setGetdata] = useState<IBlog>(initialValue);
 
   const [loading, setLoading] = useState(false);
@@ -49,7 +48,7 @@ function Blogpost() {
         <>Loading..</>
       ) : (
         <BlogDetail
-          author={getData.user.name}
+          author={getData?.user?.name}
           authorImage=''
           title={getData.title}
           description={getData.description}

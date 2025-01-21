@@ -1,21 +1,14 @@
+//Module
 import { Box, Button, Container, TextField, Typography } from '@mui/material';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+//components
 import axiosInstance from '../utils/axiosIntance';
-import { IUsers } from '../@types';
-
-const initialValue: IUsers = {
-  user: {
-    _id: '',
-    email: '',
-    name: '',
-  },
-  accessToken: '',
-  refreshToken: '',
-};
+import useAuth from '../hooks/useAuth';
 
 function Login() {
+  const { setIsAuth, setUser } = useAuth();
   const navigate = useNavigate();
 
   const [input, setInput] = useState({
@@ -23,30 +16,11 @@ function Login() {
     password: '',
   });
 
-  // const [getdata, setGetData] = useState();
-  // const [getdata, setGetData] = useState<IUsers>(initialValue);
-
   const handleInput = (e: any) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     });
-  };
-
-  const validateForm = () => {
-    const { email, password } = input;
-    if (!email || !password) {
-      Swal.fire({
-        icon: 'error',
-        title: 'All fields are required',
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      return false;
-    }
-
-    // Add more complex validation if needed (e.g., email format)
-    return true;
   };
 
   const handleSubmit = async (event: any) => {
@@ -56,16 +30,25 @@ function Login() {
 
       if (res.status === 200) {
         localStorage.setItem('accessToken', res.data.data.accessToken);
+
+        axiosInstance.defaults.headers.common[
+          'Authorization'
+        ] = `Bearer ${res.data.data.accessToken}`;
+
         Swal.fire({
           icon: 'success',
           title: 'Login Success',
           showConfirmButton: false,
           timer: 1500,
         });
+
+        setIsAuth(true);
+        setUser(res.data.data.user);
+
         navigate('/');
       }
     } catch (error) {
-      console.log('err', error);
+      console.log('err', error?.response?.data.message);
     }
   };
 
@@ -82,6 +65,7 @@ function Login() {
             fullWidth
             margin='normal'
             name='email'
+            required
             value={input.email}
             onChange={handleInput}
           />
@@ -91,6 +75,7 @@ function Login() {
             fullWidth
             name='password'
             margin='normal'
+            required
             value={input.password}
             onChange={handleInput}
           />

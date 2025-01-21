@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Container, TextField, Typography, Button, Box } from '@mui/material';
-import axios from 'axios';
+import axiosInstance from '../utils/axiosIntance';
+import useAuth from '../hooks/useAuth';
 
 function BlogCreationPage() {
+  const { user } = useAuth();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState<File | null>(null);
@@ -22,25 +24,19 @@ function BlogCreationPage() {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', description);
+    formData.append('user', user._id);
     if (image) {
       formData.append('image', image);
     }
 
     try {
-      const response = await axios.post(
-        'http://your-backend-endpoint/api/blogs',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        }
-      );
-      console.log('res', response);
-      setMessage('Blog posted successfully!');
-      setTitle('');
-      setDescription('');
-      setImage(null);
+      const res = await axiosInstance.post('/blog', formData);
+      if (res.status === 200) {
+        setMessage('Blog posted successfully!');
+        setTitle('');
+        setDescription('');
+        setImage(null);
+      }
     } catch (error) {
       setMessage('Error posting the blog. Please try again.');
       console.error(error);
@@ -80,7 +76,7 @@ function BlogCreationPage() {
         </Box>
         <Box sx={{ mb: 2 }}>
           {image && (
-            <img src={URL.createObjectURL(image)} alt='Preview' width='100%' />
+            <img src={URL.createObjectURL(image)} alt='Preview' height={200} />
           )}
           {image && (
             <Typography variant='body2' sx={{ mt: 1 }}>
@@ -109,6 +105,8 @@ function BlogCreationPage() {
         </Box>
         {message && (
           <Typography
+            my={4}
+            textAlign={'center'}
             variant='body1'
             color={message.includes('successfully') ? 'green' : 'red'}
           >

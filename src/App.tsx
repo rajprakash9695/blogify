@@ -6,11 +6,12 @@ import HomeBlog from './pages/HomeBlog';
 import { Route, Routes } from 'react-router-dom';
 import Footer from './components/Footer';
 import Blogpost from './pages/Blogpost';
-import NotFound from './components/NotFound';
-import Search from './components/search';
-import Signup from './pages/Signup';
-import Login from './pages/Login';
-import BlogCreationPage from './components/CreateBlogPage';
+import NotFound from './components/NotFound.tsx';
+import Search from './pages/search.tsx';
+import Signup from './pages/Signup.tsx';
+import Login from './pages/Login.tsx';
+import BlogCreationPage from './pages/CreateBlogPage.tsx';
+import AuthGuard from './guards/AuthGurd.tsx';
 
 function App() {
   return (
@@ -20,11 +21,17 @@ function App() {
       <Box mt={9} pt={1}>
         <Routes>
           <Route path='/' element={<HomeBlog />} />
-          {/* <Route
-          path="/login"
-          element={<LoginForm onLogin={handleLogin} onSignup={handleSignup} />}
-        /> */}
-          <Route path='/post' element={<BlogCreationPage />} />
+          <Route
+            path='/post'
+            element={
+              <>
+                <AuthGuard>
+                  <BlogCreationPage />
+                </AuthGuard>
+              </>
+            }
+          />
+
           <Route path='/view/:id' element={<Blogpost />} />
           <Route path='*' element={<NotFound />} />
           <Route path='/search' element={<Search />} />

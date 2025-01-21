@@ -1,12 +1,16 @@
-import { Box, Container, Grid } from '@mui/material';
-import CustomCard from '../components/CustomCard';
+//Module
 import { useEffect, useState } from 'react';
+import { Box, Container, Grid } from '@mui/material';
+
+// component
+import CustomCard from '../components/CustomCard';
 import axiosInstance from '../utils/axiosIntance';
 import { IBlog } from '../@types';
 
 function HomeBlog() {
   const [getData, setGetdata] = useState<IBlog[]>([]);
   const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     const getBlogs = async () => {
       setLoading(true);
@@ -33,7 +37,6 @@ function HomeBlog() {
                   <CustomCard
                     title={item.title}
                     description={item.description}
-                    //image='https://gratisography.com/wp-content/uploads/2024/10/gratisography-cool-cat-800x525.jpg'
                     image={`http://localhost:8000/image/${item.imageUrl}`}
                     to={`/view/${item._id}`}
                   />
