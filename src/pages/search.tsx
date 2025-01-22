@@ -94,7 +94,7 @@ function Search() {
                       image={`http://localhost:8000/image/${item.imageUrl}`}
                       to={`/view/${item._id}`}
                       isEdit={false}
-                      path='/'
+                      id={item._id}
                     />
                   </Grid>
                 ))}
