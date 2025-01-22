@@ -1,6 +1,6 @@
 //Module
 import { useEffect, useState } from 'react';
-import { Box, Container, Grid } from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
 
 // component
 import CustomCard from '../components/CustomCard';
@@ -28,7 +28,16 @@ function HomeBlog() {
     <Box py={2}>
       <Container>
         {loading ? (
-          <>Loading...</>
+          <Box
+            height={'60vh'}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Typography variant='h4'>No blogs Found!</Typography>
+          </Box>
         ) : (
           <Grid container spacing={2} justifyContent='center'>
             {getData &&
@@ -39,6 +48,8 @@ function HomeBlog() {
                     description={item.description}
                     image={`http://localhost:8000/image/${item.imageUrl}`}
                     to={`/view/${item._id}`}
+                    isEdit={false}
+                    id='/'
                   />
                 </Grid>
               ))}

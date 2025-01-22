@@ -30,7 +30,15 @@ function BlogDetail({
     <Container maxWidth='md'>
       {/* Blog Header */}
       <Box sx={{ textAlign: 'center', my: 4 }}>
-        <Typography variant='h3' component='h1' gutterBottom>
+        <Typography
+          sx={{
+            fontSize: {
+              xs: 24,
+              md: 44,
+            },
+            mb: 0.5,
+          }}
+        >
           {title}
         </Typography>
         <Typography variant='body1' color='text.secondary'>

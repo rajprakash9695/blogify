@@ -1,16 +1,16 @@
-import { Box, Button, Container, TextField, Typography } from "@mui/material";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
+import { Box, Button, Container, TextField, Typography } from '@mui/material';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import axiosInstance from '../utils/axiosIntance';
 
 function Signup() {
+  const navigate = useNavigate();
   const [input, setInput] = useState({
-    fullname: "",
-    email: "",
-    password: "",
+    name: '',
+    email: '',
+    password: '',
   });
-
-  const [data, setData] = useState();
 
   const handleInput = (e: any) => {
     setInput({
@@ -20,100 +20,97 @@ function Signup() {
   };
 
   const validateForm = () => {
-    const { fullname, email, password } = input;
-    if (!fullname || !email || !password) {
+    const { name, email, password } = input;
+    if (!name || !email || !password) {
       Swal.fire({
-        icon: "error",
-        title: "All fields are required",
+        icon: 'error',
+        title: 'All Fields are required',
         showConfirmButton: false,
-        timer: 1500,
+        timer: 1000,
       });
       return false;
     }
-
-    // Add more complex validation if needed (e.g., email format)
     return true;
   };
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
     if (!validateForm()) {
       return;
     }
-
-    const response = await fetch("http://localhost:3030/api/v1/user/signup", {
-      method: "POST",
-      body: JSON.stringify(input),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((response) => setData(response));
-
-    if (data.error) {
-      Swal.fire({
-        icon: "error",
-        title: data.message,
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    } else {
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Signed up Success, Please Login..!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+    try {
+      const res = await axiosInstance.post('/auth/signup', input);
+      if (res.data.status === 201) {
+        //@ts-ignore
+        Swal.fire({
+          icon: 'success',
+          title: `${res.data.message}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setInput({
+          name: '',
+          email: '',
+          password: '',
+        });
+        navigate('/login');
+      }
+    } catch (error) {
+      //@ts-ignore
+      if (error.response.data.status >= 400) {
+        Swal.fire({
+          icon: 'error',
+          //@ts-ignore
+          title: `${error.response.data.message}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     }
-    setInput({
-      fullname: "",
-      email: "",
-      password: "",
-    });
   };
 
   return (
-    <Box sx={{ height: "80vh" }} mt={4}>
-      <Container maxWidth={"sm"}>
+    <Box sx={{ height: '80vh' }} mt={4}>
+      <Container maxWidth={'sm'}>
         <form onSubmit={handleSubmit}>
-          <Typography variant="h4" textAlign={"center"}>
+          <Typography variant='h4' textAlign={'center'}>
             Signup Form
           </Typography>
           <TextField
-            label=" Full Name"
+            label=' Full Name'
             fullWidth
-            margin="normal"
-            name="fullname"
-            value={input.fullname}
+            required
+            margin='normal'
+            name='name'
+            value={input.name}
             onChange={handleInput}
           />
           <TextField
-            label="Email"
-            type="email"
+            label='Email'
+            type='email'
             fullWidth
-            margin="normal"
-            name="email"
+            required
+            margin='normal'
+            name='email'
             value={input.email}
             onChange={handleInput}
           />
           <TextField
-            label="Password"
-            type="password"
+            label='Password'
+            type='password'
             fullWidth
-            name="password"
-            margin="normal"
+            required
+            name='password'
+            margin='normal'
             value={input.password}
             onChange={handleInput}
           />
-          <Button variant="contained" color="primary" fullWidth type="submit">
+          <Button variant='contained' color='primary' fullWidth type='submit'>
             Signup
           </Button>
         </form>
-        <Typography mt={2} textAlign={"center"}>
-          If user already Exist Please <Link to="/login">Login</Link>
+        <Typography mt={2} textAlign={'center'}>
+          If user already Exist Please <Link to='/login'>Login</Link>
         </Typography>
       </Container>
     </Box>

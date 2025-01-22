@@ -17,6 +17,7 @@ interface AuthContextProps {
   logout: (event: React.FormEvent) => void;
   user: IProps;
   setUser: any;
+  loading: boolean;
 }
 
 const initailUserValue: IProps = {
@@ -31,6 +32,7 @@ const AuthContext = createContext<AuthContextProps | null>(null);
 
 const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<IProps>(initailUserValue);
 
   const accessToken = localStorage.getItem('accessToken');
@@ -48,16 +50,22 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
               timer: 1500,
             });
             localStorage.clear();
+            setLoading(false);
           }
           if (res.data.data) {
             setUser(res.data.data);
             setIsAuth(true);
+            setLoading(false);
           }
+        } else {
+          setLoading(false);
         }
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
+
     initialize();
   }, []);
 
@@ -80,6 +88,7 @@ const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         logout,
         user,
         setUser,
+        loading,
       }}
     >
       {children}

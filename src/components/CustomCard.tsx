@@ -1,3 +1,5 @@
+import { DeleteForever } from '@mui/icons-material';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import {
   Box,
   Button,
@@ -5,6 +7,8 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  IconButton,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -14,6 +18,9 @@ type Props = {
   description: string;
   image: string;
   to: string;
+  isEdit: boolean;
+  id: string;
+  onDelete: (id: string) => void;
 };
 
 function CustomCard({
@@ -21,9 +28,12 @@ function CustomCard({
   description = '',
   image = '',
   to = '',
+  isEdit = false,
+  id = '',
+  onDelete,
 }: Props) {
   const truncatedDescription =
-    description.length > 300 ? description.slice(0, 200) + '...' : description;
+    description.length > 200 ? description.slice(0, 200) + '...' : description;
 
   return (
     <Box>
@@ -47,6 +57,22 @@ function CustomCard({
           <Link to={to}>
             <Button size='small'>Read More</Button>
           </Link>
+          {isEdit && (
+            <Box sx={{ display: 'flex', justifyContent: 'end', flex: 1 }}>
+              <Link to={`/${id}/edit`}>
+                <IconButton>
+                  <Tooltip title={'Edit'} placement='top'>
+                    <EditNoteIcon color='primary' fontSize='medium' />
+                  </Tooltip>
+                </IconButton>{' '}
+              </Link>
+              <IconButton onClick={() => onDelete(id)}>
+                <Tooltip title={'Delete'} placement='top'>
+                  <DeleteForever color='primary' fontSize='medium' />
+                </Tooltip>
+              </IconButton>{' '}
+            </Box>
+          )}
         </CardActions>
       </Card>
     </Box>

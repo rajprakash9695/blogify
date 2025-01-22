@@ -23,12 +23,30 @@ function Login() {
     });
   };
 
+  const validateForm = () => {
+    const { email, password } = input;
+    if (!email || !password) {
+      Swal.fire({
+        icon: 'error',
+        title: 'All Fields are required',
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (event: any) => {
     event.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
+
     try {
       const res = await axiosInstance.post('/auth/login', input);
 
-      if (res.status === 200) {
+      if (res.data.status === 200) {
         localStorage.setItem('accessToken', res.data.data.accessToken);
 
         axiosInstance.defaults.headers.common[
@@ -37,18 +55,29 @@ function Login() {
 
         Swal.fire({
           icon: 'success',
-          title: 'Login Success',
+          title: `${res.data.message}`,
           showConfirmButton: false,
           timer: 1500,
         });
-
         setIsAuth(true);
         setUser(res.data.data.user);
-
+        setInput({
+          email: '',
+          password: '',
+        });
         navigate('/');
       }
     } catch (error) {
-      console.log('err', error?.response?.data.message);
+      //@ts-ignore
+      if (error.response.data.status >= 400) {
+        Swal.fire({
+          icon: 'error',
+          //@ts-ignore
+          title: `${error.response.data.message}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     }
   };
 
@@ -65,7 +94,6 @@ function Login() {
             fullWidth
             margin='normal'
             name='email'
-            required
             value={input.email}
             onChange={handleInput}
           />
@@ -75,7 +103,6 @@ function Login() {
             fullWidth
             name='password'
             margin='normal'
-            required
             value={input.password}
             onChange={handleInput}
           />

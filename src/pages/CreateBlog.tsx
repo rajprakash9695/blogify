@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { Container, TextField, Typography, Button, Box } from '@mui/material';
 import axiosInstance from '../utils/axiosIntance';
 import useAuth from '../hooks/useAuth';
+import Swal from 'sweetalert2';
 
 function BlogCreationPage() {
   const { user } = useAuth();
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
+  const [input, setInput] = useState({
+    title: '',
+    description: '',
+  });
   const [image, setImage] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -17,29 +19,59 @@ function BlogCreationPage() {
     }
   };
 
+  const validateForm = () => {
+    const { title, description } = input;
+    if (!title || !description || !image) {
+      Swal.fire({
+        icon: 'error',
+        title: 'All Fields are required',
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
     setLoading(true);
 
     const formData = new FormData();
-    formData.append('title', title);
-    formData.append('description', description);
+    formData.append('title', input.title);
+    formData.append('description', input.description);
     formData.append('user', user._id);
     if (image) {
       formData.append('image', image);
     }
-
     try {
       const res = await axiosInstance.post('/blog', formData);
       if (res.status === 200) {
-        setMessage('Blog posted successfully!');
-        setTitle('');
-        setDescription('');
+        Swal.fire({
+          icon: 'success',
+          title: `${res.data.message}`,
+        });
+        setInput({
+          title: '',
+          description: '',
+        });
         setImage(null);
       }
     } catch (error) {
-      setMessage('Error posting the blog. Please try again.');
       console.error(error);
+      //@ts-ignore
+      if (error.response.data.status >= 400) {
+        Swal.fire({
+          icon: 'error',
+          //@ts-ignore
+          title: `${error.response.data.message}`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -47,19 +79,28 @@ function BlogCreationPage() {
 
   return (
     <Container maxWidth='sm' sx={{ mt: 4 }}>
-      <Typography variant='h4' component='h1' gutterBottom>
+      <Typography
+        sx={{
+          fontSize: {
+            xs: 24,
+            md: 44,
+          },
+          mb: 0.5,
+        }}
+      >
         Create a New Blog
       </Typography>
 
       <form onSubmit={handleSubmit}>
         <Box sx={{ mb: 2 }}>
           <TextField
-            label='Title'
+            label='Tittle'
             variant='outlined'
             fullWidth
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
+            value={input.title}
+            onChange={(e) =>
+              setInput((pre) => ({ ...pre, title: e.target.value }))
+            }
           />
         </Box>
         <Box sx={{ mb: 2 }}>
@@ -69,9 +110,10 @@ function BlogCreationPage() {
             fullWidth
             multiline
             rows={4}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
+            value={input.description}
+            onChange={(e) =>
+              setInput((pre) => ({ ...pre, description: e.target.value }))
+            }
           />
         </Box>
         <Box sx={{ mb: 2 }}>
@@ -103,16 +145,6 @@ function BlogCreationPage() {
             {loading ? 'Posting...' : 'Post Blog'}
           </Button>
         </Box>
-        {message && (
-          <Typography
-            my={4}
-            textAlign={'center'}
-            variant='body1'
-            color={message.includes('successfully') ? 'green' : 'red'}
-          >
-            {message}
-          </Typography>
-        )}
       </form>
     </Container>
   );

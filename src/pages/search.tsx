@@ -93,6 +93,8 @@ function Search() {
                       description={item.description}
                       image={`http://localhost:8000/image/${item.imageUrl}`}
                       to={`/view/${item._id}`}
+                      isEdit={false}
+                      path='/'
                     />
                   </Grid>
                 ))}
